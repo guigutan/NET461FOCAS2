@@ -1,0 +1,14 @@
+E:\mydoc\csharp\NET461FOCAS2\bin\Debug\NET461FOCAS2.exe.config
+E:\mydoc\csharp\NET461FOCAS2\bin\Debug\NET461FOCAS2.exe
+E:\mydoc\csharp\NET461FOCAS2\bin\Debug\NET461FOCAS2.pdb
+E:\mydoc\csharp\NET461FOCAS2\obj\Debug\NET461FOCAS2.csproj.AssemblyReference.cache
+E:\mydoc\csharp\NET461FOCAS2\obj\Debug\NET461FOCAS2.Form1.resources
+E:\mydoc\csharp\NET461FOCAS2\obj\Debug\NET461FOCAS2.Properties.Resources.resources
+E:\mydoc\csharp\NET461FOCAS2\obj\Debug\NET461FOCAS2.csproj.GenerateResource.cache
+E:\mydoc\csharp\NET461FOCAS2\obj\Debug\NET461FOCAS2.csproj.CoreCompileInputs.cache
+E:\mydoc\csharp\NET461FOCAS2\obj\Debug\NET461FOCAS2.exe
+E:\mydoc\csharp\NET461FOCAS2\obj\Debug\NET461FOCAS2.pdb
+E:\mydoc\csharp\NET461FOCAS2\obj\Debug\NET461FOCAS2.exe.config
+E:\mydoc\csharp\NET461FOCAS2\bin\Debug\Fwlib32.dll
+E:\mydoc\csharp\NET461FOCAS2\bin\Debug\fwlibe1.dll
+E:\mydoc\csharp\NET461FOCAS2\bin\Debug\fwlib32.cs

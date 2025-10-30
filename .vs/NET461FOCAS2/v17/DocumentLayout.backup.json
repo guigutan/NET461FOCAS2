@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{66E54111-F8AB-4A68-82AE-F2100282C5E6}|NET461FOCAS2.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66E54111-F8AB-4A68-82AE-F2100282C5E6}|NET461FOCAS2.csproj|E:\\mydoc\\csharp\\NET461FOCAS2\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{66E54111-F8AB-4A68-82AE-F2100282C5E6}|NET461FOCAS2.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{66E54111-F8AB-4A68-82AE-F2100282C5E6}|NET461FOCAS2.csproj|E:\\mydoc\\csharp\\NET461FOCAS2\\fwlib32.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{66E54111-F8AB-4A68-82AE-F2100282C5E6}|NET461FOCAS2.csproj|solutionrelative:fwlib32.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66E54111-F8AB-4A68-82AE-F2100282C5E6}|NET461FOCAS2.csproj|E:\\mydoc\\csharp\\NET461FOCAS2\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{66E54111-F8AB-4A68-82AE-F2100282C5E6}|NET461FOCAS2.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "E:\\mydoc\\csharp\\NET461FOCAS2\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAgwGUAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAUwP0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-28T06:00:47.366Z",
               "IsPinned": true,
@@ -40,28 +40,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "fwlib32.cs",
               "DocumentMoniker": "E:\\mydoc\\csharp\\NET461FOCAS2\\fwlib32.cs",
               "RelativeDocumentMoniker": "fwlib32.cs",
               "ToolTip": "E:\\mydoc\\csharp\\NET461FOCAS2\\fwlib32.cs",
               "RelativeToolTip": "fwlib32.cs",
-              "ViewState": "AgIAABUjAAAAAAAAAAAIwCUjAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAALsGAAAAAAAAAAAgwNAGAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-30T00:48:00.948Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Form1.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "E:\\mydoc\\csharp\\NET461FOCAS2\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "E:\\mydoc\\csharp\\NET461FOCAS2\\Form1.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "Form1.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T00:53:59.49Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-10-15T00:53:59.49Z"
             }
           ]
         }

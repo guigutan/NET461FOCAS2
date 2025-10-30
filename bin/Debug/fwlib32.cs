@@ -10,6 +10,7 @@
 #define LEAVE_OLD_STYLE
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 public class Focas1
@@ -31,9 +32,9 @@ public class Focas1
 
     /* Error Codes */
     public enum focas_ret {
-        EW_PROTOCOL =     (-17),           /* protocol error */ 
-        EW_SOCKET   =     (-16),           /* Windows socket error */    //代表了tcp Socket套接字错误，说明网络问题。
-        EW_NODLL =     (-15),           /* DLL not exist error */    //代表DLL未找到
+        EW_PROTOCOL =     (-17),           /* protocol error */ /*协议错误,通信协议不匹配或解析失败（如 TCP/IP 协议、FOCAS 内部协议异常）*/
+        EW_SOCKET   =     (-16),           /* Windows socket error */    //Windows 套接字错误,网络连接相关问题（如 Socket 创建失败、连接超时、端口占用等）。
+        EW_NODLL =     (-15),           /* DLL not exist error */    //DLL 不存在错误，代表DLL未找到
         EW_BUS      =     (-11),           /* bus error */
         EW_SYSTEM2  =     (-10),           /* system error */
         EW_HSSB     =     (-9) ,           /* hssb communication error */
@@ -76,14 +77,83 @@ public class Focas1
         DNC_READERR =  (-517)              /* read error */
     };
 
-/*--------------------*/
-/*                    */
-/* Structure Template */
-/*                    */
-/*--------------------*/
-/*-------------------------------------*/
-/* CNC: Control axis / spindle related */
-/*-------------------------------------*/
+
+
+    private static readonly Dictionary<int, string> _errorMessages = new Dictionary<int, string>
+    {
+        // 负数错误码（系统、通信、硬件相关）
+        {-17, "protocol error 。协议错误,通信协议不匹配或解析失败（如 TCP/IP 协议、FOCAS 内部协议异常）"},
+        {-16, "Windows socket error 。Windows套接字错误,网络连接相关问题（如Socket创建失败、连接超时、端口占用等）"},
+        {-15, "DLL not exist error 。DLL不存在错误,未找到FOCAS库依赖的动态链接库（如Fwlib32.dll缺失）"},
+        {-11, "bus error 。总线错误,硬件总线通信异常（如CNC与外部设备的总线连接故障）"},
+        {-10, "system error 。系统错误（扩展）,操作系统级别的其他错误（非EW_SYSTEM覆盖的场景）"},
+        {-9, "hssb communication error 。HSSB通信错误,高速串行总线（HSSB）通信失败（常见于CNC与外部设备的高速连接）"},
+        {-8, "Windows library handle error 。Windows库句柄错误,FOCAS库句柄（如连接句柄FlibHndl）无效或未正确初始化"},
+        {-7, "CNC/PMC version missmatch 。CNC/PMC版本不匹配,客户端库版本与CNC/PMC固件版本不兼容"},
+        {-6, "abnormal error 。异常错误,未预期的未知错误（通常是库或CNC内部异常）"},
+        {-5, "system error 。系统错误,CNC或Power Mate的系统级错误（需联系服务人员）"},
+        {-4, "shared RAM parity error 。共享RAM奇偶校验错误,共享内存（RAM）数据校验失败（硬件或数据传输问题）"},
+        {-3, "emm386 or mmcsys install error 。内存管理系统错误,操作系统内存管理组件（如emm386、mmcsys）安装或运行异常"},
+        {-2, "reset or stop occured error 。复位或停止错误,CNC被复位或停止时触发的操作失败（需重新初始化）"},
+        {-1, "busy error 。忙错误,CNC/设备正在处理其他任务，暂时无法响应（需等待或重试）；或DNC_NORMAL（DNC正常完成）"},
+        // 0（正常状态）
+        {0, "no problem 。无错误,函数执行成功，操作正常完成"},
+        // 正数错误码（操作、数据、参数相关）
+        {1, "command prepare error / pmc not exist 。命令准备错误/PMC不存在,函数未正确初始化或调用顺序错误；或指定的PMC不存在"},
+        {2, "data block length error 。数据块长度错误,输入/输出的数据块长度不符合要求（如发送的数据长度超出CNC接收缓冲区）"},
+        {3, "data number error / address range error 。数据编号错误/地址范围错误,数据的编号/索引无效；或指定的地址超出有效范围"},
+        {4, "data attribute error / data type error 。数据属性错误/数据类型错误,数据的属性（如类型、格式）不符合要求；或数据类型错误"},
+        {5, "data error 。数据错误,数据内容无效（如数值超出范围、程序未找到、文件不存在等）"},
+        {6, "no option error 。无选项错误,CNC未启用对应的功能选项（如扩展驱动、Ethernet功能未激活等，具体可通过cnc_getdtailerr获取详情）"},
+        {7, "write protect error 。写保护错误,操作被写保护阻止（如CNC参数设置为只读、程序加密保护）"},
+        {8, "memory overflow error 。内存溢出错误,CNC/设备内存不足（如Power Mate内存溢出）"},
+        {9, "cnc parameter not correct error 。CNC参数错误,CNC参数设置不正确（如关键参数值无效导致功能不可用）"},
+        {10, "buffer error 。缓冲区错误,缓冲区为空或已满（如发送数据时缓冲区已满，需重试）"},
+        {11, "path error 。路径号错误,指定的CNC路径号无效（多路径CNC中路径不存在）"},
+        {12, "cnc mode error 。CNC模式错误,CNC当前模式不支持该操作（如需在MEM模式下执行，却在MDI模式）"},
+        {13, "execution rejected error 。执行被拒绝,CNC拒绝执行操作（如STL信号开启时禁止写入、设备正在处理其他任务）"},
+        {14, "data server error 。数据服务器错误,数据服务器（DATA SERVER）操作失败（如文件读写错误、服务器超时）"},
+        {15, "alarm has been occurred 。报警已发生,CNC存在未清除的报警，导致操作无法执行"},
+        {16, "CNC is not running 。CNC未运行,CNC处于停止状态，无法执行需要运行的操作"},
+        {17, "protection data error 。保护数据错误,数据受密码保护，未授权的访问或修改（如加密的F-ROM数据）"},
+        // DNC操作相关错误码
+        {-32768, "DNC operation was canceled by CNC 。DNC操作被CNC取消,CNC主动终止了DNC操作（如用户手动取消）"},
+        {-514, "file open error 。文件打开错误,DNC操作中无法打开指定的程序文件"},
+        {-516, "file not found 。文件未找到,DNC操作指定的程序文件不存在"},
+        {-517, "read error 。读错误,读取DNC程序文件时发生错误（如文件损坏、权限不足）"}
+    };
+
+    public static string GetErrorMessage(int errorCode)
+    {
+        if (_errorMessages.TryGetValue(errorCode, out string message))
+        {
+            return message;
+        }
+        return $"未找到错误码 {errorCode} 对应的信息，请检查错误码是否正确";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*--------------------*/
+    /*                    */
+    /* Structure Template */
+    /*                    */
+    /*--------------------*/
+    /*-------------------------------------*/
+    /* CNC: Control axis / spindle related */
+    /*-------------------------------------*/
 
     /* cnc_actf:read actual axis feedrate(F) */
     /* cnc_acts:read actual spindle speed(S) */

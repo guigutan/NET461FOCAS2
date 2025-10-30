@@ -8993,7 +8993,7 @@ public class Focas1
     [DllImport("FWLIB32.dll", EntryPoint="cnc_rdlife")]
     public static extern short cnc_rdlife( ushort FlibHndl, short a, [Out,MarshalAs(UnmanagedType.LPStruct)] ODBTLIFE3 b );
 
-    /* read tool life management data(tool lift counter) */
+    /* read tool life management data(tool lift counter)  00 */ 
     [DllImport("FWLIB32.dll", EntryPoint="cnc_rdcount")]
     public static extern short cnc_rdcount( ushort FlibHndl, short a, [Out,MarshalAs(UnmanagedType.LPStruct)] ODBTLIFE3 b );
 

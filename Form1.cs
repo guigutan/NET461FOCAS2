@@ -11,17 +11,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Focas1;
 
+
 namespace NET461FOCAS2
 {
     public partial class Form1 : Form
     { 
         public Form1()
         {
-            InitializeComponent();          
+            InitializeComponent();            
+          
         }
 
-        private short ret; // FOCAS函数返回值
-        private ushort h;  // 机床连接句柄
+      
      
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,10 +36,8 @@ namespace NET461FOCAS2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Fun01();
-        }
-
-
+            Func001();
+        }                
         private string  ConnMachine()
         {
             string res = "";
@@ -46,10 +45,10 @@ namespace NET461FOCAS2
             int port = 8193;
             int timeout = 3;
 
-            ret = Focas1.cnc_allclibhndl3(ip, Convert.ToUInt16(port), timeout, out h);
+            ret = Focas1.cnc_allclibhndl3(ip, Convert.ToUInt16(port), timeout, out hndl);
             if (ret != Focas1.EW_OK)
             {
-                res = $"设备未连接上\r\n错误代码: {ret}\r\n句柄: {h}";
+                res = $"设备未连接上\r\n错误代码: {ret}\r\n句柄: {hndl}";
             }
             else
             {
@@ -62,14 +61,14 @@ namespace NET461FOCAS2
         private string ConnSotp()
         {
             string result = "";
-            if (h != 0)
+            if (hndl != 0)
             {
-                ret = Focas1.cnc_freelibhndl(h);
+                ret = Focas1.cnc_freelibhndl(hndl);
                 if (ret == Focas1.EW_OK)
                 {
                     result += "已断开连接";
 
-                    h = 0;
+                    hndl = 0;
                     button2.Enabled = false;
                 }
                 else
@@ -80,43 +79,20 @@ namespace NET461FOCAS2
             return result;
         }
 
-        private void Fun01() 
+
+
+
+
+        private short ret; // FOCAS函数返回值
+        private ushort hndl;  // 机床连接句柄
+          
+        private void Func001()
         {
-           
-        }
-
-        /// <summary>
-        /// 读取指定工具组的寿命计数（使用FWLIB32.cs中的结构体）
-        /// </summary>
-        private void ReadToolLifeCount(short toolGroupNumber)
-        {
-            if (h == 0)
-            {
-                textBox1.Text = "请先连接机床\r\n";
-                return;
-            }
-
-            // 直接使用FWLIB32中的ODBTLIFE3
-            Focas1.ODBTLIFE3 countData;
-            short ret = Focas1.cnc_rdcount(h, toolGroupNumber, out countData);//参数 3 不可与关键字“out”一起传递
-
-            if (ret == Focas1.EW_OK)
-            {
-                textBox1.Text += $"工具组{countData.datano}计数：{countData.data}\r\n";
-            }
-            else
-            {
-                textBox1.Text += $"读取失败，错误码：{ret}\r\n";
-            }
+            
         }
 
 
-
-
-
-
-
-
+       
 
 
 
